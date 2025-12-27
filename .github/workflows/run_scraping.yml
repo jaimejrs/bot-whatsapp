@@ -1,0 +1,30 @@
+name: Sincronizar Painel IPTV
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Roda a cada 6 horas (00h, 06h, 12h, 18h)
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Executar Script de Scraping
+        env:
+          CBN_USER: ${{ secrets.CBN_USER }}
+          CBN_PASS: ${{ secrets.CBN_PASS }}
+          GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
+        run: python main.py
