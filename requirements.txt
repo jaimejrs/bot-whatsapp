@@ -4,3 +4,4 @@ beautifulsoup4
 gspread
 oauth2client
 lxml
+cloudscraper
